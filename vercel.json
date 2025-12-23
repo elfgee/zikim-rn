@@ -1,5 +1,6 @@
 {
   "framework": null,
+  "installCommand": "yarn install --production=false",
   "buildCommand": "yarn vercel:build",
   "outputDirectory": "apps/zikim-rn/dist",
   "cleanUrls": true,
