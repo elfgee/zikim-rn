@@ -6,7 +6,7 @@
     "build:zuix": "cd packages/zuix && yarn build",
     "dev:app": "cd apps/zikim-rn && npx expo start",
     "dev": "yarn build:zuix && yarn dev:app",
-    "vercel:build": "cd packages/zuix && yarn build && cd ../../apps/zikim-rn && npx expo export --platform web"
+    "vercel:build": "yarn build:zuix && cd apps/zikim-rn && npx expo export --platform web"
   },
   "workspaces": ["apps/*", "packages/*"],
   "resolutions": {
