@@ -1,0 +1,11 @@
+{
+  "framework": null,
+  "buildCommand": "yarn vercel:build",
+  "outputDirectory": "apps/zikim-rn/dist",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+
+

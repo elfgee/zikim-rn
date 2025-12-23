@@ -1,0 +1,67 @@
+{
+	"name": "@zigbang/zuix2",
+	"version": "0.0.0",
+	"description": "",
+	"scripts": {
+		"build": "rm -rf ./dist && rollup -c",
+		"build:types": "tsc -p tsconfig.build.json",
+		"deploy": "scripts/release.sh",
+		"svg": "cd scripts && chmod +x ./svgo.js && ./svgo.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/core": "^7.17.9",
+		"@babel/preset-env": "^7.16.11",
+		"@babel/preset-react": "^7.16.7",
+		"@babel/preset-typescript": "^7.16.7",
+		"@babel/runtime": "^7.22.6",
+		"@octokit/rest": "^19.0.4",
+		"@rollup/plugin-alias": "^3.1.9",
+		"@rollup/plugin-babel": "^5.3.1",
+		"@rollup/plugin-commonjs": "^21.1.0",
+		"@rollup/plugin-node-resolve": "^13.2.1",
+		"@slack/web-api": "^6.7.2",
+		"@types/hoist-non-react-statics": "^3.3.1",
+		"@types/node": "^20.6.2",
+		"@types/react-native": "^0.67.4",
+		"@types/use-sync-external-store": "^0.0.3",
+		"react-native": "^0.68.0",
+		"react-native-haptic-feedback": "^1.14.0",
+		"react-native-linear-gradient": "^2.6.2",
+		"react-native-svg": "^12.3.0",
+		"react-native-web": "0.17.2-zigbang.7",
+		"rollup": "^2.70.2",
+		"rollup-plugin-copy": "^3.4.0",
+		"rollup-plugin-re": "^1.0.7",
+		"shelljs": "^0.8.5",
+		"svgo": "^3.0.2",
+		"tsc-alias": "^1.6.7",
+		"typescript": "^4.6.3"
+	},
+	"peerDependencies": {
+		"react": ">=17",
+		"react-dom": ">=16.8",
+		"react-native": ">=0.68.0",
+		"react-native-haptic-feedback": ">=1",
+		"react-native-linear-gradient": ">=2.6.2",
+		"react-native-svg": ">= 12",
+		"react-native-web": ">=0.17.2-zigbang.7"
+	},
+	"main": "dist/cjs/index.js",
+	"module": "dist/esm/index.js",
+	"react-native": "dist/app/index.js",
+	"types": "dist/types/index.d.ts",
+	"files": [
+		"dist",
+		"README.md"
+	],
+	"publishConfig": {
+		"registry": "https://npm.zigbang.io/"
+	},
+	"sideEffects": false,
+	"dependencies": {
+		"hoist-non-react-statics": "^3.0.0",
+		"use-sync-external-store": "^1.0.0"
+	}
+}

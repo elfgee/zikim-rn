@@ -1,0 +1,52 @@
+pr: none
+
+trigger:
+  branches:
+    include:
+      - master
+      - deploy/dev
+      - release/*
+  paths:
+    include: 
+      - packages/zuix/*
+
+variables:
+  - group: AzureKeyVaults
+  - group: zigbang-cms
+  - template: ../../ci/variables.yml
+
+jobs:
+  - job: 'ZUIX_Deploy_${{ variables.env }}'
+    pool: Default
+    condition: and(succeeded(), in('${{ variables.env }}', 'dev', 'preview', 'prod'))
+    steps:
+    - task: Cache@2
+      inputs:
+        key: 'yarn | $(Agent.OS) | zuix | packages/zuix/package.json'
+        path: $(Build.SourcesDirectory)/.yarn
+      displayName: Cache Yarn Packages
+    - script: |
+        use_node 18 nosudo
+      displayName: Use Node 18
+    - script: |
+        yarn workspaces focus zuix @zigbang/zuix2
+      displayName: Install
+    - script: |
+        yarn build
+      displayName: Build
+      workingDirectory: packages/zuix
+    - script: |
+        export STAGE=${{variables.env}}
+        export BRANCH=$(Build.SourceBranch)
+        yarn deploy
+      displayName: Deploy
+      workingDirectory: packages/zuix
+    - script: |
+        export SLACK_TOKEN=$(SLACK-API-TOKEN-ZIGBANG-BOT)
+        export SLACK_TOKEN_FOR_LOOKUP=$(SLACK_TOKEN)
+        export GITHUB_TOKEN=$(GITHUB-ZIGBANGBOT-TOKEN)
+        EMAIL=${{ variables['Build.RequestedForEmail'] }}
+        [ -z "$EMAIL" ] && EMAIL=$(git log -1 --pretty=format:"%ae")
+        npx ts-node -T ./scripts/sendMessage.ts --phase=${{variables.env}} --commit=$(Build.SourceVersion) --email="$EMAIL"
+      displayName: Notify Deployment
+      workingDirectory: packages/zuix

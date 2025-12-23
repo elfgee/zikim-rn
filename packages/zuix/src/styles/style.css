@@ -1,0 +1,464 @@
+div[class^="zuix2-tp"]::before {
+	position: absolute;
+	content: "";
+	z-index: 0;
+}
+
+.zuix2-tp1::before {
+	top: -1px;
+	right: -1px;
+	left: -1px;
+	bottom: -1px;
+}
+
+.zuix2-tp2::before {
+	top: -2px;
+	right: -2px;
+	left: -2px;
+	bottom: -2px;
+}
+
+.zuix2-tp3::before {
+	top: -3px;
+	right: -3px;
+	left: -3px;
+	bottom: -3px;
+}
+
+.zuix2-tp4::before {
+	top: -4px;
+	right: -4px;
+	left: -4px;
+	bottom: -4px;
+}
+
+.zuix2-tp5::before {
+	top: -5px;
+	right: -5px;
+	left: -5px;
+	bottom: -5px;
+}
+
+.zuix2-tp6::before {
+	top: -6px;
+	right: -6px;
+	left: -6px;
+	bottom: -6px;
+}
+
+.zuix2-tp7::before {
+	top: -7px;
+	right: -7px;
+	left: -7px;
+	bottom: -7px;
+}
+
+.zuix2-tp8::before {
+	top: -8px;
+	right: -8px;
+	left: -8px;
+	bottom: -8px;
+}
+
+.zuix2-tp9::before {
+	top: -9px;
+	right: -9px;
+	left: -9px;
+	bottom: -9px;
+}
+.zuix2-tp10::before {
+	top: -10px;
+	right: -10px;
+	left: -10px;
+	bottom: -10px;
+}
+
+.zuix2-tp11::before {
+	top: -11px;
+	right: -11px;
+	left: -11px;
+	bottom: -11px;
+}
+
+.zuix2-tp12::before {
+	top: -12px;
+	right: -12px;
+	left: -12px;
+	bottom: -12px;
+}
+
+.zuix2-tp13::before {
+	top: -13px;
+	right: -13px;
+	left: -13px;
+	bottom: -13px;
+}
+
+.zuix2-tp14::before {
+	top: -14px;
+	right: -14px;
+	left: -14px;
+	bottom: -14px;
+}
+
+.zuix2-tp15::before {
+	top: -15px;
+	right: -15px;
+	left: -15px;
+	bottom: -15px;
+}
+
+.zuix2-tp16::before {
+	top: -16px;
+	right: -16px;
+	left: -16px;
+	bottom: -16px;
+}
+
+.zuix2-tp17::before {
+	top: -17px;
+	right: -17px;
+	left: -17px;
+	bottom: -17px;
+}
+
+.zuix2-tp18::before {
+	top: -18px;
+	right: -18px;
+	left: -18px;
+	bottom: -18px;
+}
+
+.zuix2-tp19::before {
+	top: -19px;
+	right: -19px;
+	left: -19px;
+	bottom: -19px;
+}
+
+.zuix2-tp20::before {
+	top: -20px;
+	right: -20px;
+	left: -20px;
+	bottom: -20px;
+}
+
+.zuix2-tp-top1::before {
+	top: -1px;
+}
+
+.zuix2-tp-top2::before {
+	top: -2px;
+}
+
+.zuix2-tp-top3::before {
+	top: -3px;
+}
+
+.zuix2-tp-top4::before {
+	top: -4px;
+}
+
+.zuix2-tp-top5::before {
+	top: -5px;
+}
+
+.zuix2-tp-top6::before {
+	top: -6px;
+}
+
+.zuix2-tp-top7::before {
+	top: -8px;
+}
+
+.zuix2-tp-top8::before {
+	top: -8px;
+}
+
+.zuix2-tp-top9::before {
+	top: -9px;
+}
+
+.zuix2-tp-top10::before {
+	top: -10px;
+}
+
+.zuix2-tp-top11::before {
+	top: -11px;
+}
+
+.zuix2-tp-top12::before {
+	top: -12px;
+}
+
+.zuix2-tp-top13::before {
+	top: -13px;
+}
+
+.zuix2-tp-top14::before {
+	top: -14px;
+}
+
+.zuix2-tp-top15::before {
+	top: -15px;
+}
+
+.zuix2-tp-top16::before {
+	top: -16px;
+}
+
+.zuix2-tp-top17::before {
+	top: -17px;
+}
+
+.zuix2-tp-top18::before {
+	top: -18px;
+}
+
+.zuix2-tp-top19::before {
+	top: -19px;
+}
+
+.zuix2-tp-top20::before {
+	top: -20px;
+}
+
+.zuix2-tp-bottom1::before {
+	bottom: -1px;
+}
+
+.zuix2-tp-bottom2::before {
+	bottom: -2px;
+}
+
+.zuix2-tp-bottom3::before {
+	bottom: -3px;
+}
+
+.zuix2-tp-bottom4::before {
+	bottom: -4px;
+}
+
+.zuix2-tp-bottom5::before {
+	bottom: -5px;
+}
+
+.zuix2-tp-bottom6::before {
+	bottom: -6px;
+}
+
+.zuix2-tp-bottom7::before {
+	bottom: -8px;
+}
+
+.zuix2-tp-bottom8::before {
+	bottom: -8px;
+}
+
+.zuix2-tp-bottom9::before {
+	bottom: -9px;
+}
+
+.zuix2-tp-bottom10::before {
+	bottom: -10px;
+}
+
+.zuix2-tp-bottom11::before {
+	bottom: -11px;
+}
+
+.zuix2-tp-bottom12::before {
+	bottom: -12px;
+}
+
+.zuix2-tp-bottom13::before {
+	bottom: -13px;
+}
+
+.zuix2-tp-bottom14::before {
+	bottom: -14px;
+}
+
+.zuix2-tp-bottom15::before {
+	bottom: -15px;
+}
+
+.zuix2-tp-bottom16::before {
+	bottom: -16px;
+}
+
+.zuix2-tp-bottom17::before {
+	bottom: -17px;
+}
+
+.zuix2-tp-bottom18::before {
+	bottom: -18px;
+}
+
+.zuix2-tp-bottom19::before {
+	bottom: -19px;
+}
+
+.zuix2-tp-bottom20::before {
+	bottom: -20px;
+}
+
+.zuix2-tp-left1::before {
+	left: -1px;
+}
+
+.zuix2-tp-left2::before {
+	left: -2px;
+}
+
+.zuix2-tp-left3::before {
+	left: -3px;
+}
+
+.zuix2-tp-left4::before {
+	left: -4px;
+}
+
+.zuix2-tp-left5::before {
+	left: -5px;
+}
+
+.zuix2-tp-left6::before {
+	left: -6px;
+}
+
+.zuix2-tp-left7::before {
+	left: -8px;
+}
+
+.zuix2-tp-left8::before {
+	left: -8px;
+}
+
+.zuix2-tp-left9::before {
+	left: -9px;
+}
+
+.zuix2-tp-left10::before {
+	left: -10px;
+}
+
+.zuix2-tp-left11::before {
+	left: -11px;
+}
+
+.zuix2-tp-left12::before {
+	left: -12px;
+}
+
+.zuix2-tp-left13::before {
+	left: -13px;
+}
+
+.zuix2-tp-left14::before {
+	left: -14px;
+}
+
+.zuix2-tp-left15::before {
+	left: -15px;
+}
+
+.zuix2-tp-left16::before {
+	left: -16px;
+}
+
+.zuix2-tp-left17::before {
+	left: -17px;
+}
+
+.zuix2-tp-left18::before {
+	left: -18px;
+}
+
+.zuix2-tp-left19::before {
+	left: -19px;
+}
+
+.zuix2-tp-left20::before {
+	left: -20px;
+}
+
+.zuix2-tp-right1::before {
+	right: -1px;
+}
+
+.zuix2-tp-right2::before {
+	right: -2px;
+}
+
+.zuix2-tp-right3::before {
+	right: -3px;
+}
+
+.zuix2-tp-right4::before {
+	right: -4px;
+}
+
+.zuix2-tp-right5::before {
+	right: -5px;
+}
+
+.zuix2-tp-right6::before {
+	right: -6px;
+}
+
+.zuix2-tp-right7::before {
+	right: -8px;
+}
+
+.zuix2-tp-right8::before {
+	right: -8px;
+}
+
+.zuix2-tp-right9::before {
+	right: -9px;
+}
+
+.zuix2-tp-right10::before {
+	right: -10px;
+}
+
+.zuix2-tp-right11::before {
+	right: -11px;
+}
+
+.zuix2-tp-right12::before {
+	right: -12px;
+}
+
+.zuix2-tp-right13::before {
+	right: -13px;
+}
+
+.zuix2-tp-right14::before {
+	right: -14px;
+}
+
+.zuix2-tp-right15::before {
+	right: -15px;
+}
+
+.zuix2-tp-right16::before {
+	right: -16px;
+}
+
+.zuix2-tp-right17::before {
+	right: -17px;
+}
+
+.zuix2-tp-right18::before {
+	right: -18px;
+}
+
+.zuix2-tp-right19::before {
+	right: -19px;
+}
+
+.zuix2-tp-right20::before {
+	right: -20px;
+}
