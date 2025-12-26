@@ -1,8 +1,11 @@
 import React, { useMemo, useState } from "react"
 import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
-import { Button, Checkbox, ListSelectItem, RadioButton } from "@zigbang/zuix2"
+import { Button, Checkbox, RadioButton, TextField } from "@zigbang/zuix2"
 import { Stack, useRouter } from "expo-router"
 import { HeaderBackButton } from "@react-navigation/elements"
+
+// Graceful fallback: treat DS components as any to avoid type gaps in consuming app.
+const ZTextField: any = TextField as any
 
 export default function DiagnosisPayScreen() {
 	const router = useRouter()
@@ -107,16 +110,20 @@ export default function DiagnosisPayScreen() {
 				{/* Installment */}
 				<View style={styles.section}>
 					<Text style={styles.sectionTitle}>할부 선택</Text>
-					<ListSelectItem
-						title={installment}
-						subtitle=""
-						left={undefined}
-						right={undefined}
-						style={undefined}
+					<Pressable
 						onPress={() => setInstallment(installment === "일시불" ? "2개월" : "일시불")}
-						mt={8}
-						mb={8}
-					/>
+						style={styles.installmentPressable}
+					>
+						<ZTextField
+							value={installment}
+							placeholder="일시불"
+							status="readonly"
+							mt={0}
+							mr={0}
+							mb={0}
+							ml={0}
+						/>
+					</Pressable>
 				</View>
 
 				{/* Agreements */}
@@ -185,6 +192,7 @@ const styles = StyleSheet.create({
 	section: { gap: 8 },
 	sectionTitle: { fontSize: 15, fontWeight: "700" },
 	cardRow: { gap: 12, paddingRight: 12 },
+	installmentPressable: { alignSelf: "stretch" },
 	ctaWrapper: { gap: 8 },
 	cardChoice: {
 		width: 260,
