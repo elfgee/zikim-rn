@@ -2,8 +2,14 @@ import React, { useMemo, useState } from "react"
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
 // zuix2 exports (source: packages/zuix/src/index.ts -> components/index.ts)
 import { Button, Checkbox, TextInput } from "@zigbang/zuix2"
+import { useRouter } from "expo-router"
 
 type ContractValue = "1y" | "2y" | "3y+" | null
+
+// Graceful fallback: treat DS components as any to avoid type gaps in consuming app.
+const ZButton: any = Button as any
+const ZCheckbox: any = Checkbox as any
+const ZTextInput: any = TextInput as any
 
 // Inline-only SegmentedControl (DS 미지원이라 화면 내부에 한정)
 function InlineSegment({
@@ -25,7 +31,7 @@ function InlineSegment({
 			{options.map((opt) => {
 				const selected = value === opt.value
 				return (
-					<Button
+					<ZButton
 						key={opt.value}
 						title={opt.label}
 						size="44"
@@ -44,6 +50,7 @@ function InlineSegment({
 const onlyDigits = (v: string) => v.replace(/[^\d]/g, "")
 
 export default function DiagnosisStartScreen() {
+	const router = useRouter()
 	const [address, setAddress] = useState("")
 	const [area, setArea] = useState("")
 	const [deposit, setDeposit] = useState("")
@@ -71,7 +78,7 @@ export default function DiagnosisStartScreen() {
 
 				<View style={styles.section}>
 					<Text style={styles.label}>주소</Text>
-					<TextInput
+					<ZTextInput
 						value={address}
 						onChangeText={setAddress}
 						placeholder="서울시 강남구 역삼동 123-45"
@@ -81,9 +88,9 @@ export default function DiagnosisStartScreen() {
 
 				<View style={styles.section}>
 					<Text style={styles.label}>면적</Text>
-					<TextInput
+					<ZTextInput
 						value={area}
-						onChangeText={(v) => setArea(onlyDigits(v))}
+						onChangeText={(v: string) => setArea(onlyDigits(v))}
 						placeholder="84"
 						keyboardType="numeric"
 						postfix="m²"
@@ -92,9 +99,9 @@ export default function DiagnosisStartScreen() {
 
 				<View style={styles.section}>
 					<Text style={styles.label}>보증금</Text>
-					<TextInput
+					<ZTextInput
 						value={deposit}
-						onChangeText={(v) => setDeposit(onlyDigits(v))}
+						onChangeText={(v: string) => setDeposit(onlyDigits(v))}
 						placeholder="50000"
 						keyboardType="numeric"
 						postfix="만원"
@@ -103,9 +110,9 @@ export default function DiagnosisStartScreen() {
 
 				<View style={styles.section}>
 					<Text style={styles.label}>월세 (선택)</Text>
-					<TextInput
+					<ZTextInput
 						value={monthlyRent}
-						onChangeText={(v) => setMonthlyRent(onlyDigits(v))}
+						onChangeText={(v: string) => setMonthlyRent(onlyDigits(v))}
 						placeholder="50"
 						keyboardType="numeric"
 						postfix="만원"
@@ -118,24 +125,23 @@ export default function DiagnosisStartScreen() {
 				</View>
 
 				<View style={styles.section}>
-					<Text style={styles.summaryTitle}>진단 리포트</Text>
-					<Text style={styles.summaryPrice}>29,000</Text>
+					<Text style={styles.summaryLine}>진단 리포트 29,000원</Text>
 					<Text style={styles.summarySub}>리포트 생성까지 최대 20분 소요</Text>
 				</View>
 
 				<View style={styles.section}>
-					<Checkbox
+					<ZCheckbox
 						text="[필수] 개인정보 수집 및 이용 동의"
 						checked={agreeRequired1}
 						onPress={() => setAgreeRequired1((v) => !v)}
 					/>
-					<Checkbox
+					<ZCheckbox
 						text="[필수] 서비스 이용약관 동의"
 						checked={agreeRequired2}
 						onPress={() => setAgreeRequired2((v) => !v)}
 						mt={8}
 					/>
-					<Checkbox
+					<ZCheckbox
 						text="[선택] 마케팅 정보 수신 동의"
 						checked={agreeMarketing}
 						onPress={() => setAgreeMarketing((v) => !v)}
@@ -143,13 +149,14 @@ export default function DiagnosisStartScreen() {
 					/>
 				</View>
 
-				<Button
+				<ZButton
 					title="진단 시작하기"
 					size="44"
 					theme="primary"
 					status={ctaDisabled ? "disabled" : "normal"}
 					onPress={() => {
-						// TODO: 다음 단계(결제/진단 요청)로 이동
+						if (ctaDisabled) return
+						router.push("/diagnosis/pay" as any)
 					}}
 				/>
 			</ScrollView>
@@ -163,9 +170,8 @@ const styles = StyleSheet.create({
 	title: { fontSize: 20, fontWeight: "700", textAlign: "center", marginVertical: 8 },
 	section: { gap: 8 },
 	label: { fontSize: 15, fontWeight: "600", color: "#1A1A1A" },
-	summaryTitle: { fontSize: 15, fontWeight: "700" },
-	summaryPrice: { fontSize: 20, fontWeight: "800", marginTop: 4 },
-	summarySub: { fontSize: 13, color: "#4D4D4D", marginTop: 2 },
+	summaryLine: { fontSize: 17, fontWeight: "700" },
+	summarySub: { fontSize: 13, color: "#FF6905", marginTop: 2 },
 	segmentRow: { flexDirection: "row", gap: 8 },
 	segmentButton: { flex: 1 },
 	disabled: { opacity: 0.5 },
