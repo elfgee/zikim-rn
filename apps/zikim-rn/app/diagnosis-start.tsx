@@ -151,10 +151,10 @@ export default function DiagnosisStartScreen() {
 						</View>
 					</View>
 
-				<View style={styles.section}>
-					<Text style={styles.summaryLine}>진단 리포트 29,000원</Text>
-					<Text style={styles.summarySub}>리포트 생성까지 최대 20분 소요</Text>
-				</View>
+						<View style={styles.summaryBox}>
+							<Text style={styles.summaryLine}>진단 리포트 29,000원</Text>
+							<Text style={styles.summarySub}>리포트 생성까지 최대 20분 소요</Text>
+						</View>
 
 				<View style={styles.section}>
 					<ZCheckbox
@@ -209,6 +209,11 @@ const styles = StyleSheet.create({
 	label: { fontSize: 15, fontWeight: "600", color: "#1A1A1A" },
 	summaryLine: { fontSize: 17, fontWeight: "700" },
 	summarySub: { fontSize: 13, color: "#FF6905", marginTop: 2 },
+	summaryBox: {
+		backgroundColor: "#F6F6F6",
+		borderRadius: 14,
+		padding: 16,
+	},
 	segmentRow: { flexDirection: "row", gap: 8 },
 	segmentButton: { flex: 1 },
 	disabled: { opacity: 0.5 },
