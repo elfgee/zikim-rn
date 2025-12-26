@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react"
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Image } from "expo-image"
 // zuix2 exports (source: packages/zuix/src/index.ts -> components/index.ts)
 import { Button, Checkbox, TextInput } from "@zigbang/zuix2"
 import { Stack, useRouter } from "expo-router"
@@ -48,6 +49,9 @@ function InlineSegment({
 
 // 숫자 입력 필터 (digits only)
 const onlyDigits = (v: string) => v.replace(/[^\d]/g, "")
+// Source (requested): https://github.com/zigbang/zuix2/blob/master/packages/zuix/assets/svg/ZikimLogo.svg
+const ZIKIM_LOGO_SVG_URI =
+	"https://raw.githubusercontent.com/zigbang/zuix2/master/packages/zuix/assets/svg/ZikimLogo.svg"
 
 export default function DiagnosisStartScreen() {
 	const router = useRouter()
@@ -79,7 +83,11 @@ export default function DiagnosisStartScreen() {
 					{/* Top info (custom layout, no DS components) */}
 					<View style={styles.hero}>
 						<Image
-							source={require("../assets/images/icon.png")}
+							source={
+								Platform.OS === "web"
+									? { uri: ZIKIM_LOGO_SVG_URI }
+									: require("../assets/images/icon.png")
+							}
 							style={styles.heroIcon}
 							resizeMode="contain"
 						/>
