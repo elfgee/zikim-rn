@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react"
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
 // zuix2 exports (source: packages/zuix/src/index.ts -> components/index.ts)
 import { Button, Checkbox, TextInput } from "@zigbang/zuix2"
 import { Stack, useRouter } from "expo-router"
@@ -78,8 +78,12 @@ export default function DiagnosisStartScreen() {
 				<ScrollView contentContainerStyle={styles.container}>
 					{/* Top info (custom layout, no DS components) */}
 					<View style={styles.hero}>
-						<View style={styles.heroIcon} />
-						<Text style={styles.heroTitle}>보증금 안전 진단</Text>
+						<Image
+							source={require("../assets/images/icon.png")}
+							style={styles.heroIcon}
+							resizeMode="contain"
+						/>
+						<Text style={styles.heroTitle}>내 보증금 안전 진단하기</Text>
 						<Text style={styles.heroDesc}>
 							매물의 계약 안정성을 전문가가 분석하여{"\n"}
 							안전한 계약을 도와드립니다
@@ -224,9 +228,8 @@ const styles = StyleSheet.create({
 		width: 92,
 		height: 92,
 		borderRadius: 28,
-		backgroundColor: "#111111",
 	},
-	heroTitle: { fontSize: 28, fontWeight: "800", color: "#111111" },
+	heroTitle: { fontSize: 28, fontWeight: "700", color: "#0BA04B" },
 	heroDesc: { fontSize: 18, fontWeight: "400", color: "#666666", textAlign: "center", lineHeight: 26 },
 
 	infoCard: {
