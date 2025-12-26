@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react"
-import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button, Checkbox, ListItem, ListSelectItem, RadioButton } from "@zigbang/zuix2"
 import { useRouter } from "expo-router"
 
@@ -60,16 +60,26 @@ export default function DiagnosisPayScreen() {
 				<View style={styles.section}>
 					<Text style={styles.sectionTitle}>카드 선택</Text>
 					<View style={styles.cardRow}>
-						<RadioButton
-							text="신한카드 4221 55** **** 8123"
-							checked={card === "shinhan"}
-							onPress={() => setCard("shinhan")}
-						/>
-						<RadioButton
-							text="우리카드 5387 1234"
-							checked={card === "woori"}
-							onPress={() => setCard("woori")}
-						/>
+						<Pressable
+							style={[styles.cardChoice, card === "shinhan" && styles.cardChoiceSelected]}
+							onPress={() => setCard("shinhan")}>
+							<Text style={[styles.cardChoiceText, card === "shinhan" && styles.cardChoiceTextSelected]}>
+								신한카드
+							</Text>
+							<Text style={[styles.cardChoiceSub, card === "shinhan" && styles.cardChoiceTextSelected]}>
+								4221 55** **** 8123
+							</Text>
+						</Pressable>
+						<Pressable
+							style={[styles.cardChoice, card === "woori" && styles.cardChoiceSelected]}
+							onPress={() => setCard("woori")}>
+							<Text style={[styles.cardChoiceText, card === "woori" && styles.cardChoiceTextSelected]}>
+								우리카드
+							</Text>
+							<Text style={[styles.cardChoiceSub, card === "woori" && styles.cardChoiceTextSelected]}>
+								5387 1234
+							</Text>
+						</Pressable>
 					</View>
 				</View>
 
@@ -138,5 +148,20 @@ const styles = StyleSheet.create({
 	cardRow: { gap: 8 },
 	thumb: { width: 48, height: 48, borderRadius: 8, backgroundColor: "#E6E6E6" },
 	ctaWrapper: { gap: 8 },
+	cardChoice: {
+		padding: 12,
+		borderRadius: 12,
+		borderWidth: 1,
+		borderColor: "#E6E6E6",
+		backgroundColor: "#F8F8F8",
+		gap: 4,
+	},
+	cardChoiceSelected: {
+		backgroundColor: "#1A1A1A",
+		borderColor: "#1A1A1A",
+	},
+	cardChoiceText: { fontSize: 15, fontWeight: "700", color: "#1A1A1A" },
+	cardChoiceTextSelected: { color: "#FFFFFF" },
+	cardChoiceSub: { fontSize: 13, color: "#555" },
 })
 

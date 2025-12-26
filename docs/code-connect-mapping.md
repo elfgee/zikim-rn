@@ -7,6 +7,9 @@
 - Input (suffix/postfix 지원): `packages/zuix/src/components/TextInput.tsx` (postfix prop 사용)
 - Checkbox: `packages/zuix/src/components/Checkbox.tsx`
 - SegmentedControl: `packages/zuix/src/components/SegmentedControl.tsx`
+- ListItem: `packages/zuix/src/components/list/ListItem.tsx`
+- ListSelectItem: `packages/zuix/src/components/list/ListSelectItem.tsx`
+- RadioButton: `packages/zuix/src/components/RadioButton.tsx`
 
 ## Figma Property ↔ RN prop 매핑
 
@@ -32,6 +35,25 @@
 - `opt1Label` (text) ↔ `options[0].label`
 - `opt2Label` (text) ↔ `options[1].label`
 - `opt3Label` (text) ↔ `options[2].label`
+- `disabled` (boolean) ↔ `disabled`
+
+### ListItem
+- `title` (text) ↔ `title`
+- `subtitle1/2/3/4` (text) ↔ 동일 이름 props
+- `left/right` (slot) ↔ `left` / `right`
+- `tagText` (text) ↔ `tagText`
+- `leftAlgin` (enum: top|center|bottom) ↔ `leftAlgin`
+
+### ListSelectItem
+- `title` (text) ↔ `title`
+- `subtitle` (text) ↔ `subtitle`
+- `left/right` (slot) ↔ `left` / `right`
+- `onPress` (action) ↔ `onPress`
+
+### RadioButton
+- `checked` (boolean) ↔ `checked`
+- `text` (text) ↔ `text`
+- `size` (enum: "20" | "28") ↔ `size`
 - `disabled` (boolean) ↔ `disabled`
 
 ## 사용 가이드 (예시)
