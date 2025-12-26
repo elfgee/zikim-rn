@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react"
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
 // zuix2 exports (source: packages/zuix/src/index.ts -> components/index.ts)
 import { Button, Checkbox, TextInput } from "@zigbang/zuix2"
-import { useRouter } from "expo-router"
+import { Stack, useRouter } from "expo-router"
 
 type ContractValue = "1y" | "2y" | "3y+" | null
 
@@ -72,9 +72,10 @@ export default function DiagnosisStartScreen() {
 	)
 
 	return (
-		<SafeAreaView style={styles.safe}>
-			<ScrollView contentContainerStyle={styles.container}>
-				<Text style={styles.title}>보증금 안전 진단</Text>
+		<>
+			<Stack.Screen options={{ title: "보증금 안전 시작" }} />
+			<SafeAreaView style={styles.safe}>
+				<ScrollView contentContainerStyle={styles.container}>
 
 				<View style={styles.section}>
 					<Text style={styles.label}>주소</Text>
@@ -149,18 +150,19 @@ export default function DiagnosisStartScreen() {
 					/>
 				</View>
 
-				<ZButton
-					title="진단 시작하기"
-					size="44"
-					theme="primary"
-					status={ctaDisabled ? "disabled" : "normal"}
-					onPress={() => {
-						if (ctaDisabled) return
-						router.push("/diagnosis/pay" as any)
-					}}
-				/>
-			</ScrollView>
-		</SafeAreaView>
+					<ZButton
+						title="진단 시작하기"
+						size="44"
+						theme="primary"
+						status={ctaDisabled ? "disabled" : "normal"}
+						onPress={() => {
+							if (ctaDisabled) return
+							router.push("/diagnosis/pay" as any)
+						}}
+					/>
+				</ScrollView>
+			</SafeAreaView>
+		</>
 	)
 }
 

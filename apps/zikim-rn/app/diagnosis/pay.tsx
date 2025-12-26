@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react"
 import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button, Checkbox, ListSelectItem, RadioButton } from "@zigbang/zuix2"
-import { useRouter } from "expo-router"
+import { Stack, useRouter } from "expo-router"
 
 export default function DiagnosisPayScreen() {
 	const router = useRouter()
@@ -21,9 +21,10 @@ export default function DiagnosisPayScreen() {
 	}
 
 	return (
-		<SafeAreaView style={styles.safe}>
-			<ScrollView contentContainerStyle={styles.container}>
-				<Text style={styles.title}>결제</Text>
+		<>
+			<Stack.Screen options={{ title: "결제" }} />
+			<SafeAreaView style={styles.safe}>
+				<ScrollView contentContainerStyle={styles.container}>
 
 				{/* Item info */}
 				<View style={styles.card}>
@@ -57,7 +58,7 @@ export default function DiagnosisPayScreen() {
 				{/* Payment method */}
 				<View style={styles.section}>
 					<Text style={styles.sectionTitle}>결제 수단</Text>
-					<RadioButton text="직방 페이" checked disabled />
+					<RadioButton text="직방 페이" checked disabled mt={0} mr={0} mb={0} ml={0} style={undefined} />
 				</View>
 
 				{/* Card selection */}
@@ -92,6 +93,10 @@ export default function DiagnosisPayScreen() {
 					<Text style={styles.sectionTitle}>할부 선택</Text>
 					<ListSelectItem
 						title={installment}
+						subtitle=""
+						left={undefined}
+						right={undefined}
+						style={undefined}
 						onPress={() => setInstallment(installment === "일시불" ? "2개월" : "일시불")}
 						mt={8}
 						mb={8}
@@ -105,18 +110,30 @@ export default function DiagnosisPayScreen() {
 						checked={agree1}
 						onPress={() => setAgree1((v: boolean) => !v)}
 						mt={4}
+						mr={0}
+						mb={0}
+						ml={0}
+						style={undefined}
 					/>
 					<Checkbox
 						text="[필수] 결제 대행 서비스 약관에 동의합니다."
 						checked={agree2}
 						onPress={() => setAgree2((v: boolean) => !v)}
 						mt={8}
+						mr={0}
+						mb={0}
+						ml={0}
+						style={undefined}
 					/>
 					<Checkbox
 						text="[선택] 마케팅 정보 수신에 동의합니다."
 						checked={agree3}
 						onPress={() => setAgree3((v: boolean) => !v)}
 						mt={8}
+						mr={0}
+						mb={0}
+						ml={0}
+						style={undefined}
 					/>
 				</View>
 
@@ -127,12 +144,15 @@ export default function DiagnosisPayScreen() {
 						size="44"
 						theme="primary"
 						status={payDisabled ? "disabled" : "normal"}
+						style={undefined}
+						overlay={undefined}
 						onPress={handlePay}
 					/>
-					<Button title="뒤로" size="44" theme="lineGray90" onPress={() => router.back()} />
+					<Button title="뒤로" size="44" theme="lineGray90" style={undefined} overlay={undefined} onPress={() => router.back()} />
 				</View>
-			</ScrollView>
-		</SafeAreaView>
+				</ScrollView>
+			</SafeAreaView>
+		</>
 	)
 }
 
@@ -167,10 +187,10 @@ const styles = StyleSheet.create({
 	cardChoiceSub: { fontSize: 13, color: "#555" },
 	itemRow: { flexDirection: "row", gap: 12, alignItems: "center" },
 	itemTextWrap: { flex: 1, gap: 4 },
-	itemType: { fontSize: 14, color: "#4D4D4D" },
+	itemType: { fontSize: 12, color: "#4D4D4D" },
 	itemName: { fontSize: 18, fontWeight: "700", color: "#1A1A1A" },
 	itemAddr: { fontSize: 14, color: "#4D4D4D" },
-	itemPrice: { fontSize: 16, fontWeight: "600", color: "#1A1A1A" },
+	itemPrice: { fontSize: 14, fontWeight: "600", color: "#1A1A1A" },
 	thumb: { width: 90, height: 90, borderRadius: 12, backgroundColor: "#E6E6E6" },
 })
 
