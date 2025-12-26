@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react"
-import { Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
-import { Image } from "expo-image"
+import { Image as RNImage, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Image as ExpoImage } from "expo-image"
 // zuix2 exports (source: packages/zuix/src/index.ts -> components/index.ts)
 import { Button, Checkbox, TextField } from "@zigbang/zuix2"
 import { Stack, useRouter } from "expo-router"
@@ -82,15 +82,11 @@ export default function DiagnosisStartScreen() {
 				<ScrollView contentContainerStyle={styles.container}>
 					{/* Top info (custom layout, no DS components) */}
 					<View style={styles.hero}>
-						<Image
-							source={
-								Platform.OS === "web"
-									? { uri: ZIKIM_LOGO_SVG_URI }
-									: require("../assets/images/icon.png")
-							}
-							style={styles.heroIcon}
-							resizeMode="contain"
-						/>
+						{Platform.OS === "web" ? (
+							<RNImage source={{ uri: ZIKIM_LOGO_SVG_URI }} style={styles.heroIcon} resizeMode="contain" />
+						) : (
+							<ExpoImage source={require("../assets/images/icon.png")} style={styles.heroIcon} contentFit="contain" />
+						)}
 						<Text style={styles.heroTitle}>내 보증금 안전 진단하기</Text>
 						<Text style={styles.heroDesc}>
 							매물의 계약 안정성을 전문가가 분석하여{"\n"}
