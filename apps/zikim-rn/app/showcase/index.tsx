@@ -16,6 +16,9 @@ export default function ShowcaseHome() {
         <Link href="/showcase/chip" style={styles.link}>
           Chip
         </Link>
+        <Link href="/showcase/tokens" style={styles.link}>
+          Tokens / Colors
+        </Link>
       </View>
     </View>
   );
