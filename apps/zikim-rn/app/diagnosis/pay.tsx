@@ -32,8 +32,8 @@ export default function DiagnosisPayScreen() {
 						<View style={styles.itemTextWrap}>
 							<Text style={styles.itemType}>아파트</Text>
 							<Text style={styles.itemName}>레미안옥수리버젠</Text>
-							<Text style={styles.itemAddr}>서울시 성동구 옥수동 561</Text>
 							<Text style={styles.itemPrice}>84m² / 보증금 5억 / 월세 50만</Text>
+							<Text style={styles.itemAddr}>서울시 성동구 옥수동 561</Text>
 						</View>
 					</View>
 				</View>
@@ -171,6 +171,6 @@ const styles = StyleSheet.create({
 	itemName: { fontSize: 18, fontWeight: "700", color: "#1A1A1A" },
 	itemAddr: { fontSize: 14, color: "#4D4D4D" },
 	itemPrice: { fontSize: 16, fontWeight: "600", color: "#1A1A1A" },
-	thumb: { width: 60, height: 60, borderRadius: 12, backgroundColor: "#E6E6E6" },
+	thumb: { width: 90, height: 90, borderRadius: 12, backgroundColor: "#E6E6E6" },
 })
 
