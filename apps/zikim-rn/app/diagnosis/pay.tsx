@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react"
 import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
-import { Button, Checkbox, ListItem, ListSelectItem, RadioButton } from "@zigbang/zuix2"
+import { Button, Checkbox, ListSelectItem, RadioButton } from "@zigbang/zuix2"
 import { useRouter } from "expo-router"
 
 export default function DiagnosisPayScreen() {
@@ -26,13 +26,17 @@ export default function DiagnosisPayScreen() {
 				<Text style={styles.title}>결제</Text>
 
 				{/* Item info */}
-				<ListItem
-					left={<View style={styles.thumb} />}
-					title="서울시 강남구 역삼동 | 84m²"
-					subtitle1="아파트"
-					subtitle2="보증금 5억 / 월세 50만"
-					style={styles.card}
-				/>
+				<View style={styles.card}>
+					<View style={styles.itemRow}>
+						<View style={styles.thumb} />
+						<View style={styles.itemTextWrap}>
+							<Text style={styles.itemType}>아파트</Text>
+							<Text style={styles.itemName}>레미안옥수리버젠</Text>
+							<Text style={styles.itemAddr}>서울시 성동구 옥수동 561</Text>
+							<Text style={styles.itemPrice}>84m² / 보증금 5억 / 월세 50만</Text>
+						</View>
+					</View>
+				</View>
 
 				{/* Summary */}
 				<View style={styles.card}>
@@ -145,7 +149,6 @@ const styles = StyleSheet.create({
 	section: { gap: 8 },
 	sectionTitle: { fontSize: 15, fontWeight: "700" },
 	cardRow: { gap: 8 },
-	thumb: { width: 48, height: 48, borderRadius: 8, backgroundColor: "#E6E6E6" },
 	ctaWrapper: { gap: 8 },
 	cardChoice: {
 		padding: 12,
@@ -162,5 +165,12 @@ const styles = StyleSheet.create({
 	cardChoiceText: { fontSize: 15, fontWeight: "700", color: "#1A1A1A" },
 	cardChoiceTextSelected: { color: "#FFFFFF" },
 	cardChoiceSub: { fontSize: 13, color: "#555" },
+	itemRow: { flexDirection: "row", gap: 12, alignItems: "center" },
+	itemTextWrap: { flex: 1, gap: 4 },
+	itemType: { fontSize: 14, color: "#4D4D4D" },
+	itemName: { fontSize: 18, fontWeight: "700", color: "#1A1A1A" },
+	itemAddr: { fontSize: 14, color: "#4D4D4D" },
+	itemPrice: { fontSize: 16, fontWeight: "600", color: "#1A1A1A" },
+	thumb: { width: 60, height: 60, borderRadius: 12, backgroundColor: "#E6E6E6" },
 })
 
