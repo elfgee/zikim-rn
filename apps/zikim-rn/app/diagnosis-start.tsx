@@ -154,27 +154,27 @@ export default function DiagnosisStartScreen() {
 						<View style={styles.summaryBox}>
 							<Text style={styles.summaryLine}>진단 리포트 29,000원</Text>
 							<Text style={styles.summarySub}>리포트 생성까지 최대 20분 소요</Text>
-						</View>
 
-				<View style={styles.section}>
-					<ZCheckbox
-						text="[필수] 개인정보 수집 및 이용 동의"
-						checked={agreeRequired1}
-						onPress={() => setAgreeRequired1((v) => !v)}
-					/>
-					<ZCheckbox
-						text="[필수] 서비스 이용약관 동의"
-						checked={agreeRequired2}
-						onPress={() => setAgreeRequired2((v) => !v)}
-						mt={8}
-					/>
-					<ZCheckbox
-						text="[선택] 마케팅 정보 수신 동의"
-						checked={agreeMarketing}
-						onPress={() => setAgreeMarketing((v) => !v)}
-						mt={8}
-					/>
-				</View>
+							<View style={styles.summaryAgreements}>
+								<ZCheckbox
+									text="[필수] 개인정보 수집 및 이용 동의"
+									checked={agreeRequired1}
+									onPress={() => setAgreeRequired1((v) => !v)}
+								/>
+								<ZCheckbox
+									text="[필수] 서비스 이용약관 동의"
+									checked={agreeRequired2}
+									onPress={() => setAgreeRequired2((v) => !v)}
+									mt={8}
+								/>
+								<ZCheckbox
+									text="[선택] 마케팅 정보 수신 동의"
+									checked={agreeMarketing}
+									onPress={() => setAgreeMarketing((v) => !v)}
+									mt={8}
+								/>
+							</View>
+						</View>
 
 					<ZButton
 						title="진단 시작하기"
@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
 		borderRadius: 14,
 		padding: 16,
 	},
+	summaryAgreements: { marginTop: 12 },
 	segmentRow: { flexDirection: "row", gap: 8 },
 	segmentButton: { flex: 1 },
 	disabled: { opacity: 0.5 },
