@@ -64,7 +64,11 @@ export default function DiagnosisPayScreen() {
 				{/* Card selection */}
 				<View style={styles.section}>
 					<Text style={styles.sectionTitle}>카드 선택</Text>
-					<View style={styles.cardRow}>
+					<ScrollView
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						contentContainerStyle={styles.cardRow}
+					>
 						<Pressable
 							style={[styles.cardChoice, card === "shinhan" && styles.cardChoiceSelectedShinhan]}
 							onPress={() => setCard("shinhan")}>
@@ -85,7 +89,7 @@ export default function DiagnosisPayScreen() {
 								5387 1234
 							</Text>
 						</Pressable>
-					</View>
+					</ScrollView>
 				</View>
 
 				{/* Installment */}
@@ -168,15 +172,18 @@ const styles = StyleSheet.create({
 	bold: { fontWeight: "700" },
 	section: { gap: 8 },
 	sectionTitle: { fontSize: 15, fontWeight: "700" },
-	cardRow: { gap: 8 },
+	cardRow: { gap: 12, paddingRight: 12 },
 	ctaWrapper: { gap: 8 },
 	cardChoice: {
-		padding: 12,
+		width: 260,
+		aspectRatio: 8 / 5,
+		padding: 16,
 		borderRadius: 12,
 		borderWidth: 1,
 		borderColor: "#E6E6E6",
 		backgroundColor: "#F8F8F8",
 		gap: 4,
+		justifyContent: "flex-end",
 	},
 	cardChoiceSelectedShinhan: {
 		backgroundColor: "#1C47FA",
