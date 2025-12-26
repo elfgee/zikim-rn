@@ -66,7 +66,7 @@ export default function DiagnosisPayScreen() {
 					<Text style={styles.sectionTitle}>카드 선택</Text>
 					<View style={styles.cardRow}>
 						<Pressable
-							style={[styles.cardChoice, card === "shinhan" && styles.cardChoiceSelected]}
+							style={[styles.cardChoice, card === "shinhan" && styles.cardChoiceSelectedShinhan]}
 							onPress={() => setCard("shinhan")}>
 							<Text style={[styles.cardChoiceText, card === "shinhan" && styles.cardChoiceTextSelected]}>
 								신한카드
@@ -76,7 +76,7 @@ export default function DiagnosisPayScreen() {
 							</Text>
 						</Pressable>
 						<Pressable
-							style={[styles.cardChoice, card === "woori" && styles.cardChoiceSelected]}
+							style={[styles.cardChoice, card === "woori" && styles.cardChoiceSelectedWoori]}
 							onPress={() => setCard("woori")}>
 							<Text style={[styles.cardChoiceText, card === "woori" && styles.cardChoiceTextSelected]}>
 								우리카드
@@ -178,9 +178,13 @@ const styles = StyleSheet.create({
 		backgroundColor: "#F8F8F8",
 		gap: 4,
 	},
-	cardChoiceSelected: {
-		backgroundColor: "#1A1A1A",
-		borderColor: "#1A1A1A",
+	cardChoiceSelectedShinhan: {
+		backgroundColor: "#1C47FA",
+		borderColor: "#1C47FA",
+	},
+	cardChoiceSelectedWoori: {
+		backgroundColor: "#0EAAE8",
+		borderColor: "#0EAAE8",
 	},
 	cardChoiceText: { fontSize: 15, fontWeight: "700", color: "#1A1A1A" },
 	cardChoiceTextSelected: { color: "#FFFFFF" },
