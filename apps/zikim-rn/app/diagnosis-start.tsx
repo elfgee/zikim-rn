@@ -99,6 +99,8 @@ export default function DiagnosisStartScreen() {
 						</View>
 					</View>
 
+					<Text style={styles.midTitle}>매물 정보를 입력해주세요.</Text>
+
 				<View style={styles.section}>
 					<Text style={styles.label}>주소</Text>
 					<ZTextInput
@@ -216,7 +218,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#111111",
 	},
 	heroTitle: { fontSize: 28, fontWeight: "800", color: "#111111" },
-	heroDesc: { fontSize: 18, fontWeight: "600", color: "#666666", textAlign: "center", lineHeight: 26 },
+	heroDesc: { fontSize: 18, fontWeight: "400", color: "#666666", textAlign: "center", lineHeight: 26 },
 
 	infoCard: {
 		backgroundColor: "#F6F6F6",
@@ -224,10 +226,12 @@ const styles = StyleSheet.create({
 		padding: 18,
 		gap: 14,
 	},
-	infoCardTitle: { fontSize: 20, fontWeight: "800", color: "#111111" },
+	infoCardTitle: { fontSize: 20, fontWeight: "400", color: "#111111" },
 	infoList: { gap: 12, paddingTop: 4 },
 	infoRow: { flexDirection: "row", gap: 12, alignItems: "flex-start" },
-	check: { fontSize: 18, fontWeight: "900", color: "#111111", lineHeight: 22, marginTop: 2 },
-	infoRowText: { flex: 1, fontSize: 16, fontWeight: "600", color: "#333333", lineHeight: 22 },
+	check: { fontSize: 18, fontWeight: "400", color: "#111111", lineHeight: 22, marginTop: 2 },
+	infoRowText: { flex: 1, fontSize: 14, fontWeight: "400", color: "#333333", lineHeight: 20 },
+
+	midTitle: { fontSize: 18, fontWeight: "700", color: "#111111", marginTop: 8 },
 })
 
