@@ -87,8 +87,7 @@ export default function DiagnosisPayScreen() {
 				<View style={styles.section}>
 					<Text style={styles.sectionTitle}>할부 선택</Text>
 					<ListSelectItem
-						title="할부"
-						subtitle={installment}
+						title={installment}
 						onPress={() => setInstallment(installment === "일시불" ? "2개월" : "일시불")}
 						mt={8}
 						mb={8}
