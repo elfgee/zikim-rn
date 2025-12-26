@@ -73,9 +73,31 @@ export default function DiagnosisStartScreen() {
 
 	return (
 		<>
-			<Stack.Screen options={{ title: "보증금 안전 시작" }} />
+			<Stack.Screen options={{ title: "지킴 진단" }} />
 			<SafeAreaView style={styles.safe}>
 				<ScrollView contentContainerStyle={styles.container}>
+					{/* Top info (custom layout, no DS components) */}
+					<View style={styles.hero}>
+						<View style={styles.heroIcon} />
+						<Text style={styles.heroTitle}>보증금 안전 진단</Text>
+						<Text style={styles.heroDesc}>
+							매물의 계약 안정성을 전문가가 분석하여{"\n"}
+							안전한 계약을 도와드립니다
+						</Text>
+					</View>
+
+					<View style={styles.infoCard}>
+						<Text style={styles.infoCardTitle}>진단 리포트 포함 내용</Text>
+						<View style={styles.infoList}>
+							<InfoRow text="매물진단: 권리관계, 근저당, 전세가율 분석" />
+							<InfoRow text="소유자 안정성: 집주인 신뢰도 확인" />
+							<InfoRow text="시세 진단: 보증금 회수 위험도 평가" />
+							<InfoRow text="대출/보험 진단: 보증보험 가입 가능 여부" />
+							<InfoRow text="범죄/치안: 보안시설, 범죄발생율 분석" />
+							<InfoRow text="생활/편의: 편의시설 분포, 정주여건 비교" />
+							<InfoRow text="법적 보호 특약 조항" />
+						</View>
+					</View>
 
 				<View style={styles.section}>
 					<Text style={styles.label}>주소</Text>
@@ -166,10 +188,18 @@ export default function DiagnosisStartScreen() {
 	)
 }
 
+function InfoRow({ text }: { text: string }) {
+	return (
+		<View style={styles.infoRow}>
+			<Text style={styles.check}>✓</Text>
+			<Text style={styles.infoRowText}>{text}</Text>
+		</View>
+	)
+}
+
 const styles = StyleSheet.create({
 	safe: { flex: 1, backgroundColor: "#FFF" },
 	container: { padding: 20, gap: 16 },
-	title: { fontSize: 20, fontWeight: "700", textAlign: "center", marginVertical: 8 },
 	section: { gap: 8 },
 	label: { fontSize: 15, fontWeight: "600", color: "#1A1A1A" },
 	summaryLine: { fontSize: 17, fontWeight: "700" },
@@ -177,5 +207,27 @@ const styles = StyleSheet.create({
 	segmentRow: { flexDirection: "row", gap: 8 },
 	segmentButton: { flex: 1 },
 	disabled: { opacity: 0.5 },
+
+	hero: { alignItems: "center", gap: 12, paddingTop: 8, paddingBottom: 8 },
+	heroIcon: {
+		width: 92,
+		height: 92,
+		borderRadius: 28,
+		backgroundColor: "#111111",
+	},
+	heroTitle: { fontSize: 28, fontWeight: "800", color: "#111111" },
+	heroDesc: { fontSize: 18, fontWeight: "600", color: "#666666", textAlign: "center", lineHeight: 26 },
+
+	infoCard: {
+		backgroundColor: "#F6F6F6",
+		borderRadius: 18,
+		padding: 18,
+		gap: 14,
+	},
+	infoCardTitle: { fontSize: 20, fontWeight: "800", color: "#111111" },
+	infoList: { gap: 12, paddingTop: 4 },
+	infoRow: { flexDirection: "row", gap: 12, alignItems: "flex-start" },
+	check: { fontSize: 18, fontWeight: "900", color: "#111111", lineHeight: 22, marginTop: 2 },
+	infoRowText: { flex: 1, fontSize: 16, fontWeight: "600", color: "#333333", lineHeight: 22 },
 })
 
