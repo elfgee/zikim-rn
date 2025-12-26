@@ -34,7 +34,8 @@ function InlineSegment({
 						onPress={() => onChange(opt.value)}
 						style={styles.segmentButton}
 					/>
-			))}
+				)
+			})}
 		</View>
 	)
 }
