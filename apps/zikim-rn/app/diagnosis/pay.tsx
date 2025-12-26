@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react"
 import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Button, Checkbox, ListSelectItem, RadioButton } from "@zigbang/zuix2"
 import { Stack, useRouter } from "expo-router"
+import { HeaderBackButton } from "@react-navigation/elements"
 
 export default function DiagnosisPayScreen() {
 	const router = useRouter()
@@ -26,13 +27,11 @@ export default function DiagnosisPayScreen() {
 				options={{
 					title: "결제",
 					headerLeft: () => (
-						<Pressable
-							hitSlop={10}
+						<HeaderBackButton
 							onPress={() => {
 								router.replace("/diagnosis-start" as any)
-							}}>
-							<Text style={styles.headerBack}>‹</Text>
-						</Pressable>
+							}}
+						/>
 					),
 				}}
 			/>
@@ -177,7 +176,6 @@ const styles = StyleSheet.create({
 	safe: { flex: 1, backgroundColor: "#FFF" },
 	container: { padding: 20, gap: 16 },
 	title: { fontSize: 20, fontWeight: "700" },
-	headerBack: { fontSize: 26, lineHeight: 26, paddingRight: 6 },
 	card: { padding: 16, borderRadius: 12, backgroundColor: "#F8F8F8", gap: 8 },
 	row: { flexDirection: "row", justifyContent: "space-between" },
 	rowTotal: { flexDirection: "row", justifyContent: "space-between", marginTop: 4 },
