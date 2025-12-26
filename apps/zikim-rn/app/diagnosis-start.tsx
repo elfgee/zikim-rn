@@ -101,53 +101,55 @@ export default function DiagnosisStartScreen() {
 
 					<Text style={styles.midTitle}>매물 정보를 입력해주세요.</Text>
 
-				<View style={styles.section}>
-					<Text style={styles.label}>주소</Text>
-					<ZTextInput
-						value={address}
-						onChangeText={setAddress}
-						placeholder="서울시 강남구 역삼동 123-45"
-						keyboardType="default"
-					/>
-				</View>
+					<View style={styles.form}>
+						<View style={styles.section}>
+							<Text style={styles.label}>주소</Text>
+							<ZTextInput
+								value={address}
+								onChangeText={setAddress}
+								placeholder="서울시 강남구 역삼동 123-45"
+								keyboardType="default"
+							/>
+						</View>
 
-				<View style={styles.section}>
-					<Text style={styles.label}>면적</Text>
-					<ZTextInput
-						value={area}
-						onChangeText={(v: string) => setArea(onlyDigits(v))}
-						placeholder="84"
-						keyboardType="numeric"
-						postfix="m²"
-					/>
-				</View>
+						<View style={styles.section}>
+							<Text style={styles.label}>면적</Text>
+							<ZTextInput
+								value={area}
+								onChangeText={(v: string) => setArea(onlyDigits(v))}
+								placeholder="84"
+								keyboardType="numeric"
+								postfix="m²"
+							/>
+						</View>
 
-				<View style={styles.section}>
-					<Text style={styles.label}>보증금</Text>
-					<ZTextInput
-						value={deposit}
-						onChangeText={(v: string) => setDeposit(onlyDigits(v))}
-						placeholder="50000"
-						keyboardType="numeric"
-						postfix="만원"
-					/>
-				</View>
+						<View style={styles.section}>
+							<Text style={styles.label}>보증금</Text>
+							<ZTextInput
+								value={deposit}
+								onChangeText={(v: string) => setDeposit(onlyDigits(v))}
+								placeholder="50000"
+								keyboardType="numeric"
+								postfix="만원"
+							/>
+						</View>
 
-				<View style={styles.section}>
-					<Text style={styles.label}>월세 (선택)</Text>
-					<ZTextInput
-						value={monthlyRent}
-						onChangeText={(v: string) => setMonthlyRent(onlyDigits(v))}
-						placeholder="50"
-						keyboardType="numeric"
-						postfix="만원"
-					/>
-				</View>
+						<View style={styles.section}>
+							<Text style={styles.label}>월세 (선택)</Text>
+							<ZTextInput
+								value={monthlyRent}
+								onChangeText={(v: string) => setMonthlyRent(onlyDigits(v))}
+								placeholder="50"
+								keyboardType="numeric"
+								postfix="만원"
+							/>
+						</View>
 
-				<View style={styles.section}>
-					<Text style={styles.label}>희망 계약 기간</Text>
-					<InlineSegment value={contractPeriod} onChange={setContractPeriod} />
-				</View>
+						<View style={styles.section}>
+							<Text style={styles.label}>희망 계약 기간</Text>
+							<InlineSegment value={contractPeriod} onChange={setContractPeriod} />
+						</View>
+					</View>
 
 				<View style={styles.section}>
 					<Text style={styles.summaryLine}>진단 리포트 29,000원</Text>
@@ -201,7 +203,8 @@ function InfoRow({ text }: { text: string }) {
 
 const styles = StyleSheet.create({
 	safe: { flex: 1, backgroundColor: "#FFF" },
-	container: { padding: 20, gap: 16 },
+	container: { padding: 16, gap: 16 },
+	form: { gap: 16 },
 	section: { gap: 8 },
 	label: { fontSize: 15, fontWeight: "600", color: "#1A1A1A" },
 	summaryLine: { fontSize: 17, fontWeight: "700" },
