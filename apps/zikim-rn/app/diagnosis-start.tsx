@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react"
 import { Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
 import { Image } from "expo-image"
 // zuix2 exports (source: packages/zuix/src/index.ts -> components/index.ts)
-import { Button, Checkbox, TextInput } from "@zigbang/zuix2"
+import { Button, Checkbox, TextField } from "@zigbang/zuix2"
 import { Stack, useRouter } from "expo-router"
 
 type ContractValue = "1y" | "2y" | "3y+" | null
@@ -10,7 +10,7 @@ type ContractValue = "1y" | "2y" | "3y+" | null
 // Graceful fallback: treat DS components as any to avoid type gaps in consuming app.
 const ZButton: any = Button as any
 const ZCheckbox: any = Checkbox as any
-const ZTextInput: any = TextInput as any
+const ZTextField: any = TextField as any
 
 // Inline-only SegmentedControl (DS 미지원이라 화면 내부에 한정)
 function InlineSegment({
@@ -116,44 +116,60 @@ export default function DiagnosisStartScreen() {
 					<View style={styles.form}>
 						<View style={styles.section}>
 							<Text style={styles.label}>주소</Text>
-							<ZTextInput
+							<ZTextField
 								value={address}
 								onChangeText={setAddress}
 								placeholder="서울시 강남구 역삼동 123-45"
 								keyboardType="default"
+								mt={0}
+								mr={0}
+								mb={0}
+								ml={0}
 							/>
 						</View>
 
 						<View style={styles.section}>
 							<Text style={styles.label}>면적</Text>
-							<ZTextInput
+							<ZTextField
 								value={area}
 								onChangeText={(v: string) => setArea(onlyDigits(v))}
 								placeholder="84"
 								keyboardType="numeric"
 								postfix="m²"
+								mt={0}
+								mr={0}
+								mb={0}
+								ml={0}
 							/>
 						</View>
 
 						<View style={styles.section}>
 							<Text style={styles.label}>보증금</Text>
-							<ZTextInput
+							<ZTextField
 								value={deposit}
 								onChangeText={(v: string) => setDeposit(onlyDigits(v))}
 								placeholder="50000"
 								keyboardType="numeric"
 								postfix="만원"
+								mt={0}
+								mr={0}
+								mb={0}
+								ml={0}
 							/>
 						</View>
 
 						<View style={styles.section}>
 							<Text style={styles.label}>월세 (선택)</Text>
-							<ZTextInput
+							<ZTextField
 								value={monthlyRent}
 								onChangeText={(v: string) => setMonthlyRent(onlyDigits(v))}
 								placeholder="50"
 								keyboardType="numeric"
 								postfix="만원"
+								mt={0}
+								mr={0}
+								mb={0}
+								ml={0}
 							/>
 						</View>
 
