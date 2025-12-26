@@ -24,10 +24,6 @@ export default function DiagnosisPayScreen() {
 		<SafeAreaView style={styles.safe}>
 			<ScrollView contentContainerStyle={styles.container}>
 				<Text style={styles.title}>결제</Text>
-				<Text style={styles.sub}>진단 리포트 29,900원</Text>
-				<Text style={styles.desc}>
-					결제 후 리포트 생성이 시작되며, 최대 20분 소요될 수 있어요.
-				</Text>
 
 				{/* Item info */}
 				<ListItem
@@ -131,8 +127,6 @@ const styles = StyleSheet.create({
 	safe: { flex: 1, backgroundColor: "#FFF" },
 	container: { padding: 20, gap: 16 },
 	title: { fontSize: 20, fontWeight: "700" },
-	sub: { fontSize: 16, fontWeight: "600" },
-	desc: { fontSize: 14, color: "#4D4D4D" },
 	card: { padding: 16, borderRadius: 12, backgroundColor: "#F8F8F8", gap: 8 },
 	row: { flexDirection: "row", justifyContent: "space-between" },
 	rowTotal: { flexDirection: "row", justifyContent: "space-between", marginTop: 4 },
