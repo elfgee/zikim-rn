@@ -1,178 +1,110 @@
 import React, { useMemo, useState } from "react"
-import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native"
-import { Button, Checkbox, RadioButton, TextField } from "@zigbang/zuix2"
+import { Alert, SafeAreaView, ScrollView, StyleSheet, View } from "react-native"
+import { Button, Checkbox, Color, SegmentedControl, Text } from "@zigbang/zuix2"
 import { Stack, useRouter } from "expo-router"
-import { HeaderBackButton } from "@react-navigation/elements"
+import { useDiagnosis } from "@/components/diagnosis/diagnosis-context"
 
-// Graceful fallback: treat DS components as any to avoid type gaps in consuming app.
-const ZTextField: any = TextField as any
+const ZButton: any = Button as any
+const ZCheckbox: any = Checkbox as any
+const ZText: any = Text as any
+const ZSegment: any = SegmentedControl as any
 
 export default function DiagnosisPayScreen() {
 	const router = useRouter()
+	const { draft, setDraft } = useDiagnosis()
 
-	// mock data
-	const [card, setCard] = useState<"shinhan" | "woori" | null>("shinhan")
-	const [installment, setInstallment] = useState<"일시불" | "2개월">("일시불")
+	const planOptions = useMemo(
+		() => [
+			{ label: "1회 (5,500원)", value: "once" },
+			{ label: "5회 (22,000원)", value: "five" },
+			...(draft.ticketRemaining > 0 ? [{ label: `이용권 사용 (잔여 ${draft.ticketRemaining}회)`, value: "ticket" }] : []),
+		],
+		[draft.ticketRemaining]
+	)
+
 	const [agree1, setAgree1] = useState(false)
 	const [agree2, setAgree2] = useState(false)
-	const [agree3, setAgree3] = useState(false)
 
-	const payDisabled = useMemo(() => !agree1 || !agree2 || !card, [agree1, agree2, card])
+	const payDisabled = useMemo(() => !draft.paymentPlan || !agree1 || !agree2, [draft.paymentPlan, agree1, agree2])
 
-	const handlePay = () => {
-		if (payDisabled) return
-		Alert.alert("결제", "결제 모의 동작입니다.")
-	}
+	const totalPriceLabel = useMemo(() => {
+		if (draft.paymentPlan === "once") return "5,500원"
+		if (draft.paymentPlan === "five") return "22,000원"
+		if (draft.paymentPlan === "ticket") return "0원"
+		return "-"
+	}, [draft.paymentPlan])
 
 	return (
 		<>
-			<Stack.Screen
-				options={{
-					title: "결제",
-					headerLeft: () => (
-						<HeaderBackButton
-							onPress={() => {
-								router.replace("/diagnosis-start" as any)
-							}}
-						/>
-					),
-				}}
-			/>
+			<Stack.Screen options={{ title: "결제" }} />
 			<SafeAreaView style={styles.safe}>
 				<ScrollView contentContainerStyle={styles.container}>
-
-				{/* Item info */}
-				<View style={styles.card}>
-					<View style={styles.itemRow}>
-						<View style={styles.thumb} />
-						<View style={styles.itemTextWrap}>
-							<Text style={styles.itemType}>아파트</Text>
-							<Text style={styles.itemName}>레미안옥수리버젠</Text>
-							<Text style={styles.itemPrice}>84m² / 보증금 5억 / 월세 50만</Text>
-							<Text style={styles.itemAddr}>서울시 성동구 옥수동 561</Text>
+					<View style={styles.card}>
+						<ZText size="14" weight="bold" color={Color.gray10}>
+							결제 옵션
+						</ZText>
+						<ZSegment
+							options={planOptions}
+							value={draft.paymentPlan}
+							onChange={(v: string) => setDraft((p) => ({ ...p, paymentPlan: v as any }))}
+						/>
+						<View style={styles.summaryRow}>
+							<ZText size="13" weight="regular" color={Color.gray40}>
+								총 결제금액
+							</ZText>
+							<ZText size="13" weight="bold" color={Color.gray10}>
+								{totalPriceLabel}
+							</ZText>
 						</View>
+						<ZText size="12" weight="regular" color={Color.gray50}>
+							이용권은 직방 타 서비스 이용 또는 마케팅 목적으로 무료 제공될 수 있어요.
+						</ZText>
 					</View>
-				</View>
 
-				{/* Summary */}
-				<View style={styles.card}>
-					<View style={styles.row}>
-						<Text style={styles.label}>지킴진단 리포트</Text>
-						<Text style={styles.value}>29,900원</Text>
-					</View>
-					<View style={styles.row}>
-						<Text style={styles.label}>할인</Text>
-						<Text style={styles.value}>-0원</Text>
-					</View>
-					<View style={styles.rowTotal}>
-						<Text style={[styles.label, styles.bold]}>총 결제금액</Text>
-						<Text style={[styles.value, styles.bold]}>29,900원</Text>
-					</View>
-				</View>
-
-				{/* Payment method */}
-				<View style={styles.section}>
-					<Text style={styles.sectionTitle}>결제 수단</Text>
-					<RadioButton text="직방 페이" checked disabled mt={0} mr={0} mb={0} ml={0} style={undefined} />
-				</View>
-
-				{/* Card selection */}
-				<View style={styles.section}>
-					<Text style={styles.sectionTitle}>카드 선택</Text>
-					<ScrollView
-						horizontal
-						showsHorizontalScrollIndicator={false}
-						contentContainerStyle={styles.cardRow}
-					>
-						<Pressable
-							style={[styles.cardChoice, card === "shinhan" && styles.cardChoiceSelectedShinhan]}
-							onPress={() => setCard("shinhan")}>
-							<Text style={[styles.cardChoiceText, card === "shinhan" && styles.cardChoiceTextSelected]}>
-								신한카드
-							</Text>
-							<Text style={[styles.cardChoiceSub, card === "shinhan" && styles.cardChoiceTextSelected]}>
-								4221 55** **** 8123
-							</Text>
-						</Pressable>
-						<Pressable
-							style={[styles.cardChoice, card === "woori" && styles.cardChoiceSelectedWoori]}
-							onPress={() => setCard("woori")}>
-							<Text style={[styles.cardChoiceText, card === "woori" && styles.cardChoiceTextSelected]}>
-								우리카드
-							</Text>
-							<Text style={[styles.cardChoiceSub, card === "woori" && styles.cardChoiceTextSelected]}>
-								5387 1234
-							</Text>
-						</Pressable>
-					</ScrollView>
-				</View>
-
-				{/* Installment */}
-				<View style={styles.section}>
-					<Text style={styles.sectionTitle}>할부 선택</Text>
-					<Pressable
-						onPress={() => setInstallment(installment === "일시불" ? "2개월" : "일시불")}
-						style={styles.installmentPressable}
-					>
-						<ZTextField
-							value={installment}
-							placeholder="일시불"
-							status="readonly"
+					<View style={styles.section}>
+						<ZCheckbox
+							text="[필수] 서비스 이용약관 및 개인정보처리방침에 동의합니다."
+							checked={agree1}
+							onPress={() => setAgree1((v: boolean) => !v)}
 							mt={0}
 							mr={0}
 							mb={0}
 							ml={0}
 						/>
-					</Pressable>
-				</View>
+						<ZCheckbox
+							text="[필수] 결제 대행 서비스 약관에 동의합니다."
+							checked={agree2}
+							onPress={() => setAgree2((v: boolean) => !v)}
+							mt={10}
+							mr={0}
+							mb={0}
+							ml={0}
+						/>
+					</View>
 
-				{/* Agreements */}
-				<View style={styles.section}>
-					<Checkbox
-						text="[필수] 서비스 이용약관 및 개인정보처리방침에 동의합니다."
-						checked={agree1}
-						onPress={() => setAgree1((v: boolean) => !v)}
-						mt={4}
-						mr={0}
-						mb={0}
-						ml={0}
-						style={undefined}
-					/>
-					<Checkbox
-						text="[필수] 결제 대행 서비스 약관에 동의합니다."
-						checked={agree2}
-						onPress={() => setAgree2((v: boolean) => !v)}
-						mt={8}
-						mr={0}
-						mb={0}
-						ml={0}
-						style={undefined}
-					/>
-					<Checkbox
-						text="[선택] 마케팅 정보 수신에 동의합니다."
-						checked={agree3}
-						onPress={() => setAgree3((v: boolean) => !v)}
-						mt={8}
-						mr={0}
-						mb={0}
-						ml={0}
-						style={undefined}
-					/>
-				</View>
-
-				{/* CTA */}
-				<View style={styles.ctaWrapper}>
-					<Button
-						title="29,900원 결제하기"
-						size="44"
-						theme="primary"
-						status={payDisabled ? "disabled" : "normal"}
-						style={undefined}
-						overlay={undefined}
-						onPress={handlePay}
-					/>
-					<Button title="뒤로" size="44" theme="lineGray90" style={undefined} overlay={undefined} onPress={() => router.back()} />
-				</View>
+					<View style={styles.ctaWrapper}>
+						<ZButton
+							title={draft.paymentPlan === "ticket" ? "이용권으로 발급하기" : `${totalPriceLabel} 결제하기`}
+							size="44"
+							theme="primary"
+							status={payDisabled ? "disabled" : "normal"}
+							onPress={() => {
+								if (payDisabled) return
+								if (draft.paymentPlan === "ticket") {
+									setDraft((p) => ({ ...p, ticketRemaining: Math.max(0, p.ticketRemaining - 1) }))
+									router.replace("/diagnosis/issuing" as any)
+									return
+								}
+								Alert.alert("결제", "결제 모의 동작입니다.", [
+									{
+										text: "확인",
+										onPress: () => router.replace("/diagnosis/issuing" as any),
+									},
+								])
+							}}
+						/>
+						<ZButton title="뒤로" size="44" theme="lineGray90" onPress={() => router.back()} />
+					</View>
 				</ScrollView>
 			</SafeAreaView>
 		</>
@@ -180,48 +112,11 @@ export default function DiagnosisPayScreen() {
 }
 
 const styles = StyleSheet.create({
-	safe: { flex: 1, backgroundColor: "#FFF" },
-	container: { padding: 20, gap: 16 },
-	title: { fontSize: 20, fontWeight: "700" },
-	card: { padding: 16, borderRadius: 12, backgroundColor: "#F8F8F8", gap: 8 },
-	row: { flexDirection: "row", justifyContent: "space-between" },
-	rowTotal: { flexDirection: "row", justifyContent: "space-between", marginTop: 4 },
-	label: { fontSize: 14, color: "#333" },
-	value: { fontSize: 14, color: "#333" },
-	bold: { fontWeight: "700" },
-	section: { gap: 8 },
-	sectionTitle: { fontSize: 15, fontWeight: "700" },
-	cardRow: { gap: 12, paddingRight: 12 },
-	installmentPressable: { alignSelf: "stretch" },
-	ctaWrapper: { gap: 8 },
-	cardChoice: {
-		width: 260,
-		aspectRatio: 8 / 5,
-		padding: 16,
-		borderRadius: 12,
-		borderWidth: 1,
-		borderColor: "#E6E6E6",
-		backgroundColor: "#F8F8F8",
-		gap: 4,
-		justifyContent: "flex-end",
-	},
-	cardChoiceSelectedShinhan: {
-		backgroundColor: "#1C47FA",
-		borderColor: "#1C47FA",
-	},
-	cardChoiceSelectedWoori: {
-		backgroundColor: "#0EAAE8",
-		borderColor: "#0EAAE8",
-	},
-	cardChoiceText: { fontSize: 15, fontWeight: "700", color: "#1A1A1A" },
-	cardChoiceTextSelected: { color: "#FFFFFF" },
-	cardChoiceSub: { fontSize: 13, color: "#555" },
-	itemRow: { flexDirection: "row", gap: 12, alignItems: "center" },
-	itemTextWrap: { flex: 1, gap: 4 },
-	itemType: { fontSize: 12, color: "#4D4D4D" },
-	itemName: { fontSize: 18, fontWeight: "700", color: "#1A1A1A" },
-	itemAddr: { fontSize: 14, color: "#4D4D4D" },
-	itemPrice: { fontSize: 14, fontWeight: "600", color: "#1A1A1A" },
-	thumb: { width: 90, height: 90, borderRadius: 12, backgroundColor: "#E6E6E6" },
+	safe: { flex: 1, backgroundColor: Color.white as any },
+	container: { padding: 16, gap: 16 },
+	card: { padding: 16, borderRadius: 12, backgroundColor: Color.gray99 as any, gap: 10 },
+	section: { gap: 10 },
+	summaryRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+	ctaWrapper: { gap: 10, marginTop: 6 },
 })
 

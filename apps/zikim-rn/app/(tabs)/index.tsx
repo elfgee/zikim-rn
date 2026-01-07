@@ -1,98 +1,44 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from "react"
+import { SafeAreaView, StyleSheet, View } from "react-native"
+import { Button, Color, Text } from "@zigbang/zuix2"
+import { useRouter } from "expo-router"
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const ZButton: any = Button as any
+const ZText: any = Text as any
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+	const router = useRouter()
+	return (
+		<SafeAreaView style={styles.safe}>
+			<View style={styles.container}>
+				<View style={styles.hero}>
+					<ZText size="22" weight="bold" color={Color.gray10}>
+						직방 APP 게이트웨이(샘플)
+					</ZText>
+					<ZText size="14" weight="regular" color={Color.gray50}>
+						거래 전 알아야 할 권리분석, 치안·안전, 생활편의를 한눈에 확인해요.
+					</ZText>
+				</View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+				<View style={styles.card}>
+					<ZText size="18" weight="bold" color={Color.gray10}>
+						지킴진단
+					</ZText>
+					<ZText size="13" weight="regular" color={Color.gray50}>
+						거래 정보 입력 → 주소 검색 → 결제 → 발급 → 리포트 확인
+					</ZText>
+					<View style={{ marginTop: 12 }}>
+						<ZButton title="지킴진단 시작" size="44" theme="primary" onPress={() => router.push("/diagnosis/trade" as any)} />
+					</View>
+				</View>
+			</View>
+		</SafeAreaView>
+	)
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+	safe: { flex: 1, backgroundColor: Color.white as any },
+	container: { padding: 16, gap: 14 },
+	hero: { gap: 6 },
+	card: { padding: 16, borderRadius: 12, backgroundColor: Color.gray99 as any },
+})
