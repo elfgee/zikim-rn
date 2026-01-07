@@ -278,7 +278,7 @@ function SafetyTab() {
 						note={"Q. 어디서 가져온 정보인가요? A. 경찰청 최신 데이터 기준으로 제작됩니다. (연 1회 업데이트)"}
 					/>
 				</View>
-				Disclosure title="추가로 확인해보세요">
+				<Disclosure title="추가로 확인해보세요">
 					<ZText size="13" weight="regular" color={Color.gray10}>
 						체크리스트 보기 / 주변 성범죄자 조회 버튼 영역 (TBD)
 					</ZText>
