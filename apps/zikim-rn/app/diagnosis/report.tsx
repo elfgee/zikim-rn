@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from "react"
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native"
-import { Color, TabFilter, Text } from "@zigbang/zuix2"
+import { Button, Color, Pressable, Text, useSnackBar } from "@zigbang/zuix2"
 import { Stack } from "expo-router"
+import { Ionicons } from "@expo/vector-icons"
 import { useDiagnosis } from "@/components/diagnosis/diagnosis-context"
 import { formatWonSummary } from "@/components/diagnosis/money"
 import { Disclosure } from "@/components/diagnosis/disclosure"
@@ -10,29 +11,27 @@ import { BarCompareChart } from "@/components/diagnosis/charts/bar-compare-chart
 import { RadarChart } from "@/components/diagnosis/charts/radar-chart"
 
 const ZText: any = Text as any
-const ZTabFilter: any = TabFilter as any
+const ZPressable: any = Pressable as any
+const ZButton: any = Button as any
 
-type ReportTabKey = "summary" | "property" | "owner" | "market" | "loan" | "special" | "safety" | "life"
+type ReportTabKey = "property" | "owner" | "market" | "loan" | "special" | "safety" | "life"
 
 export default function DiagnosisReportScreen() {
 	const { draft } = useDiagnosis()
-	const [tab, setTab] = useState<ReportTabKey>("summary")
+	const [tab, setTab] = useState<ReportTabKey>("property")
 
 	const tabs = useMemo(
 		() => [
-			{ key: "summary", text: "요약" },
-			{ key: "property", text: "매물" },
-			{ key: "owner", text: "집주인" },
-			{ key: "market", text: "시세" },
-			{ key: "loan", text: "대출/보험" },
-			{ key: "special", text: "특약" },
-			{ key: "safety", text: "치안" },
-			{ key: "life", text: "생활" },
+			{ key: "property", text: "매물 진단" },
+			{ key: "owner", text: "집주인 진단" },
+			{ key: "market", text: "시세진단" },
+			{ key: "loan", text: "대출/보험 진단" },
+			{ key: "special", text: "맞춤 특약" },
+			{ key: "safety", text: "범죄/치안" },
+			{ key: "life", text: "생활/편의" },
 		],
 		[]
 	)
-
-	const selectedIndex = useMemo(() => Math.max(0, tabs.findIndex((t) => t.key === tab)), [tabs, tab])
 
 	const priceLine = useMemo(() => {
 		if (draft.purpose === "maemae") return `매매 ${draft.salePriceWon ? formatWonSummary(draft.salePriceWon) : "-"}`
@@ -48,7 +47,16 @@ export default function DiagnosisReportScreen() {
 
 	return (
 		<>
-			<Stack.Screen options={{ title: "리포트" }} />
+			<Stack.Screen
+				options={{
+					title: "지킴진단",
+					headerRight: () => (
+						<View style={{ marginRight: 8 }}>
+							<Ionicons name="share-outline" size={22} color={Color.gray10 as any} />
+						</View>
+					),
+				}}
+			/>
 			<SafeAreaView style={styles.safe}>
 				<ScrollView contentContainerStyle={styles.container}>
 					{/* 요약(공통) */}
@@ -79,17 +87,14 @@ export default function DiagnosisReportScreen() {
 						</View>
 					</View>
 
-					{/* 탭 */}
-					<ZTabFilter
-						widthFixed
-						data={tabs}
-						selectedIndex={selectedIndex}
-						onPressItem={(item: any) => setTab(item.key)}
-					/>
+					{/* 주요 점검 항목/특약 요약(항상 노출) */}
+					<SummaryTab />
+
+					{/* 탭(디자인: 가로 스크롤) */}
+					<ReportTabBar tabs={tabs} value={tab} onChange={setTab} />
 
 					{/* 탭별 본문 */}
 					<View style={styles.body}>
-						{tab === "summary" ? <SummaryTab /> : null}
 						{tab === "property" ? <PropertyTab /> : null}
 						{tab === "owner" ? <OwnerTab /> : null}
 						{tab === "market" ? <MarketTab /> : null}
@@ -116,9 +121,7 @@ function SummaryTab() {
 	]
 	return (
 		<View style={styles.card}>
-			<ZText size="14" weight="bold" color={Color.gray10}>
-				점검 항목 요약
-			</ZText>
+			<ZText size="14" weight="bold" color={Color.gray10}>주요 점검 항목</ZText>
 			<View style={{ gap: 10 }}>
 				{rows.map((r) => (
 					<View key={r.title} style={styles.row}>
@@ -133,6 +136,19 @@ function SummaryTab() {
 						<StatusTag status={r.status} />
 					</View>
 				))}
+			</View>
+			<View style={styles.specialSummary}>
+				<ZText size="13" weight="bold" color={Color.gray10}>
+					이 집 맞춤형 특약도 확인해보세요!
+				</ZText>
+				<View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+					<ZText size="12" weight="regular" color={Color.gray50}>
+						안전한 계약을 위한 추천 특약
+					</ZText>
+					<ZText size="12" weight="bold" color={Color.gray10}>
+						4개
+					</ZText>
+				</View>
 			</View>
 		</View>
 	)
@@ -159,7 +175,7 @@ function PropertyTab() {
 							</ZText>
 							<StatusTag status={it.status} />
 						</View>
-						<Disclosure title="상세 보기">
+						<Disclosure title="상세 보기" defaultOpen={it.status === "확인 필요"}>
 							<ZText size="13" weight="regular" color={Color.gray10}>
 								{it.detail}
 							</ZText>
@@ -194,13 +210,25 @@ function OwnerTab() {
 function MarketTab() {
 	return (
 		<View style={styles.card}>
-			<ZText size="14" weight="bold" color={Color.gray10}>
-				시세 및 여유금액
-			</ZText>
+			<ZText size="14" weight="bold" color={Color.gray10}>시세진단</ZText>
+			<View style={styles.infoBox}>
+				<ZText size="13" weight="bold" color={Color.gray10}>
+					매매 추정 시세란?
+				</ZText>
+				<ZText size="12" weight="regular" color={Color.gray50}>
+					인근 거래/시세 데이터를 기반으로 추정한 값으로, 실제 거래 시점에 따라 변동될 수 있어요.
+				</ZText>
+			</View>
+			<View style={styles.formulaBox}>
+				<ZText size="12" weight="regular" color={Color.gray50}>
+					여유금액 = (매매 추정 시세) - (기존 채무금액) - (보증금)
+				</ZText>
+				<View style={styles.formulaGraphic} />
+			</View>
 			<View style={{ gap: 10 }}>
 				<RowWithStatus title="기존 채무금액" status="확인 필요" subtitle="채무가 있다고 무조건 위험이 아니에요. 규모/우선순위를 확인하세요." />
 				<RowWithStatus title="여유 금액" status="확인 필요" subtitle="여유금액이 없으면 경고 안내 제공" />
-				<RowWithStatus title="최우선 변제권" status="양호" subtitle="설명 팝업/툴팁 제공 (TBD)" />
+				<RowWithStatus title="최우선 변제권" status="양호" subtitle="설명 컨텐츠는 섹션 내 항상 노출 (TBD)" />
 				<Disclosure title="공문서 확인하기(등기부등본)">
 					<ZText size="13" weight="regular" color={Color.gray10}>
 						PDF 다운로드 버튼(건물/토지) 자리 (TBD)
@@ -229,6 +257,7 @@ function LoanTab() {
 }
 
 function SpecialTab() {
+	const { showSnackBar } = useSnackBar()
 	return (
 		<View style={styles.card}>
 			<ZText size="14" weight="bold" color={Color.gray10}>
@@ -238,9 +267,21 @@ function SpecialTab() {
 				각 진단 항목의 하위 정보 구조 내에서 특약 안내가 제공될 수 있어요. (샘플)
 			</ZText>
 			<View style={{ gap: 10 }}>
-				DisclosureCard("추천 특약 1", "특약 문구 예시 및 적용 포인트")
-				DisclosureCard("추천 특약 2", "특약 문구 예시 및 적용 포인트")
-				DisclosureCard("추천 특약 3", "특약 문구 예시 및 적용 포인트")
+				<CopyableClause
+					title="등기변동 금지 특약"
+					body="계약일 이후부터 잔금 지급일까지 임대인은 본 부동산에 근저당권·가압류·압류·전세권·임차권 등 어떠한 권리도 추가로 설정하거나 변경하지 않는다."
+					onCopy={() => showSnackBar({ title: "클립보드에 복사되었습니다." })}
+				/>
+				<CopyableClause
+					title="보증보험 가입 불가 시 무조건 계약 무효"
+					body="본 계약은 임대인이 HUG 또는 SGI 보증보험 가입을 한 후에 계약이 유지되며, 가입이 거절될 경우 계약은 무효로 하며 임대인은 임차인에게 손해배상 책임을 부담하지 않고 계약금 전액을 즉시 반환한다."
+					onCopy={() => showSnackBar({ title: "클립보드에 복사되었습니다." })}
+				/>
+				<CopyableClause
+					title="확정일자 및 전입신고 보장"
+					body="임대인은 임차인의 잔금 지급일에 즉시 전입신고 및 확정일자 부여를 받을 수 있도록 협조하며, 임차인의 전입 및 확정일자를 지연시키는 어떠한 방해도 하지 않는다."
+					onCopy={() => showSnackBar({ title: "클립보드에 복사되었습니다." })}
+				/>
 			</View>
 		</View>
 	)
@@ -269,14 +310,18 @@ function SafetyTab() {
 
 				<View style={{ gap: 8 }}>
 					<RowWithStatus title="지난해 범죄 발생 수 비교" status="확인 필요" subtitle='출처: 경찰청 · 폭력/사기/절도/성폭행(4종) 기준' />
-					<BarCompareChart
-						data={[
-							{ label: "이 구", value: 320, color: Color.orange1 as any },
-							{ label: "인근 구 A", value: 260, color: Color.blue1 as any },
-							{ label: "인근 구 B", value: 410, color: Color.blue1 as any },
+					<CrimeCompareCards
+						items={[
+							{ label: "마포구", valueText: "98건" },
+							{ label: "은평구", valueText: "121건" },
+							{ label: "서대문구", valueText: "75건" },
 						]}
-						note={"Q. 어디서 가져온 정보인가요? A. 경찰청 최신 데이터 기준으로 제작됩니다. (연 1회 업데이트)"}
 					/>
+					<Disclosure title="FAQ">
+						<ZText size="13" weight="regular" color={Color.gray10}>
+							Q. 어디서 가져온 정보인가요?{"\n"}A. 1년에 한번 시/군/구 단위로 업데이트 되는 경찰청 최신 데이터 기준으로 제작되어 보여집니다.
+						</ZText>
+					</Disclosure>
 				</View>
 				<Disclosure title="추가로 확인해보세요">
 					<ZText size="13" weight="regular" color={Color.gray10}>
@@ -302,15 +347,16 @@ function LifeTab() {
 						aLabel="이 동네"
 						bLabel="내 동네"
 						metrics={[
+							// 디자인 기준 축/순서(시계방향): 편의점 → 대형마트 → 대중교통 → 교육/학원가 → 외식/카페 → 병원/약국
+							{ key: "conv", label: "편의점" },
+							{ key: "bigmart", label: "대형마트" },
 							{ key: "transport", label: "대중교통" },
-							{ key: "mart", label: "마트" },
-							{ key: "hospital", label: "병원" },
-							{ key: "school", label: "학교" },
-							{ key: "cafe", label: "카페" },
-							{ key: "park", label: "공원" },
+							{ key: "academy", label: "교육/학원가" },
+							{ key: "dining", label: "외식/카페" },
+							{ key: "hospital", label: "병원/약국" },
 						]}
-						aValues={{ transport: 62, mart: 48, hospital: 70, school: 55, cafe: 40, park: 66 }}
-						bValues={{ transport: 90, mart: 72, hospital: 82, school: 60, cafe: 78, park: 44 }}
+						aValues={{ conv: 60, bigmart: 30, transport: 50, academy: 40, dining: 55, hospital: 45 }}
+						bValues={{ conv: 45, bigmart: 55, transport: 80, academy: 35, dining: 60, hospital: 70 }}
 					/>
 					<Disclosure title="항목 상세 보기(샘플)">
 						<ZText size="13" weight="regular" color={Color.gray10}>
@@ -351,13 +397,88 @@ function DisclosureCard(title: string, body: string) {
 	)
 }
 
+function ReportTabBar({
+	tabs,
+	value,
+	onChange,
+}: {
+	tabs: { key: ReportTabKey; text: string }[]
+	value: ReportTabKey
+	onChange: (k: ReportTabKey) => void
+}) {
+	return (
+		<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabBar}>
+			{tabs.map((t) => {
+				const selected = t.key === value
+				return (
+					<ZPressable key={t.key} feedback={false} onPress={() => onChange(t.key)} style={styles.tabItem}>
+						<ZText size="13" weight={selected ? "bold" : "medium"} color={selected ? Color.orange1 : Color.gray50}>
+							{t.text}
+						</ZText>
+						<View style={[styles.tabUnderline, selected ? styles.tabUnderlineOn : styles.tabUnderlineOff]} />
+					</ZPressable>
+				)
+			})}
+		</ScrollView>
+	)
+}
+
+function CopyableClause({ title, body, onCopy }: { title: string; body: string; onCopy: () => void }) {
+	return (
+		<View style={styles.clauseCard}>
+			<View style={styles.clauseHeader}>
+				<ZText size="13" weight="bold" color={Color.gray10}>
+					✓ {title}
+				</ZText>
+				<ZButton theme="transparent" title="" size="32" onPress={onCopy} style={styles.iconBtn}>
+					<Ionicons name="copy-outline" size={18} color={Color.gray10 as any} />
+				</ZButton>
+			</View>
+			<ZText size="13" weight="regular" color={Color.gray10}>
+				{body}
+			</ZText>
+		</View>
+	)
+}
+
+function CrimeCompareCards({ items }: { items: { label: string; valueText: string }[] }) {
+	return (
+		<View style={styles.crimeRow}>
+			{items.map((it) => (
+				<View key={it.label} style={styles.crimeCard}>
+					<ZText size="12" weight="regular" color={Color.gray50} textAlign="center">
+						{it.label}
+					</ZText>
+					<ZText size="16" weight="bold" color={Color.gray10} textAlign="center">
+						{it.valueText}
+					</ZText>
+				</View>
+			))}
+		</View>
+	)
+}
+
 const styles = StyleSheet.create({
 	safe: { flex: 1, backgroundColor: Color.white as any },
 	container: { padding: 16, gap: 12 },
 	summaryCard: { padding: 16, borderRadius: 12, backgroundColor: Color.gray99 as any },
 	aiRow: { flexDirection: "row", alignItems: "center", gap: 8 },
+	specialSummary: { marginTop: 10, padding: 12, borderRadius: 12, backgroundColor: Color.white as any, gap: 8 },
+	infoBox: { padding: 12, borderRadius: 12, backgroundColor: Color.white as any, gap: 6 },
+	formulaBox: { padding: 12, borderRadius: 12, backgroundColor: Color.white as any, gap: 10 },
+	formulaGraphic: { height: 44, borderRadius: 10, backgroundColor: Color.gray95 as any },
 	body: { gap: 12, paddingBottom: 24 },
 	card: { padding: 16, borderRadius: 12, backgroundColor: Color.gray99 as any, gap: 12 },
 	row: { flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", gap: 10 },
+	tabBar: { gap: 18, paddingVertical: 6, paddingHorizontal: 2 },
+	tabItem: { alignItems: "center", gap: 6 },
+	tabUnderline: { height: 2, width: "100%" },
+	tabUnderlineOn: { backgroundColor: Color.orange1 },
+	tabUnderlineOff: { backgroundColor: "transparent" },
+	clauseCard: { padding: 14, borderRadius: 12, backgroundColor: Color.white as any, gap: 10 },
+	clauseHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: 10 },
+	iconBtn: { paddingHorizontal: 6, paddingVertical: 6 },
+	crimeRow: { flexDirection: "row", gap: 10 },
+	crimeCard: { flex: 1, paddingVertical: 14, borderRadius: 12, backgroundColor: Color.white as any, gap: 6 },
 })
 
